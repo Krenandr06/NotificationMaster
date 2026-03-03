@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Theme.NotificationStudio: dark Material3 theme for the Notification Studio standalone app.
+        Uses MaterialComponents.DayNight.NoActionBar to ensure all standard widgets
+        (Button, Switch, SeekBar, RadioButton) inflate correctly without theme errors.
+    -->
+    <style name="Theme.NotificationStudio" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/void_black</item>
+        <item name="colorPrimary">@color/system_cyan</item>
+        <item name="colorPrimaryVariant">@color/electric_blue</item>
+        <item name="colorOnPrimary">@color/void_black</item>
+        <item name="colorSecondary">@color/electric_blue</item>
+        <item name="colorOnSecondary">@color/void_black</item>
+        <item name="colorSurface">@color/void_black</item>
+        <item name="colorOnSurface">@android:color/white</item>
+        <item name="android:colorBackground">@color/void_black</item>
+        <item name="colorOnBackground">@android:color/white</item>
+    </style>
+</resources>

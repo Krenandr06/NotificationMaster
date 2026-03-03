@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Void Theme Colors (shared with Resolve app) -->
+    <color name="void_black">#000000</color>
+    <color name="system_cyan">#00E5FF</color>
+    <color name="electric_blue">#00F0FF</color>
+    <color name="system_red">#FF3D00</color>
+    <color name="system_gold">#FFD700</color>
+    <color name="system_green">#11D918</color>
+    <color name="void_particle">#00B0FF</color>
+    <color name="dim_white">#B3FFFFFF</color>
+    <color name="void_dark_overlay">#CC000000</color>
+    <color name="void_border">#3300E5FF</color>
+    <color name="ic_logo_color">#F1F1E6</color>
+    <color name="ic_background_color">#00F1F1E6</color>
+</resources>
