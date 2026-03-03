@@ -33,7 +33,7 @@ object NotificationBuilderUtil {
             return -1
         }
 
-        val channelId = channelManager.ensureChannelExists(urgent = params.urgentMode)
+        val channelId = channelManager.ensureChannelExists(urgent = params.urgentMode || forceHeadsUp)
         val styleConfig = NotificationStyleApplier.configFor(style, customStyleConfig)
 
         val compactView = NotificationLayoutFactory.createCompactRemoteViews(context, params, styleConfig)

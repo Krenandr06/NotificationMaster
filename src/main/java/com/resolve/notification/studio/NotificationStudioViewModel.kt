@@ -8,8 +8,11 @@ import com.resolve.notification.studio.core.NotificationLayoutFactory
 import com.resolve.notification.studio.core.NotificationPermissionHelper
 import com.resolve.notification.studio.style.NotificationStyle
 import com.resolve.notification.studio.style.NotificationStyleApplier
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.text.SimpleDateFormat
@@ -55,6 +58,9 @@ class NotificationStudioViewModel : ViewModel() {
 
     private val _state = MutableStateFlow(StudioState())
     val state: StateFlow<StudioState> = _state.asStateFlow()
+
+    private val _toastMessage = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val toastMessage: SharedFlow<String> = _toastMessage.asSharedFlow()
 
     private val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
 
@@ -111,11 +117,13 @@ class NotificationStudioViewModel : ViewModel() {
 
         if (!permHelper.isPostNotificationsGranted(context)) {
             appendLog("POST_NOTIFICATIONS not granted — cannot send notification", LogLevel.ERROR)
+            _toastMessage.tryEmit("Permission denied — grant notification permission in Settings")
             return
         }
 
         if (!permHelper.areNotificationsEnabled(context)) {
             appendLog("Notifications disabled for app — cannot send notification", LogLevel.WARN)
+            _toastMessage.tryEmit("Notifications are disabled for this app — enable in Settings")
             return
         }
 
@@ -137,8 +145,10 @@ class NotificationStudioViewModel : ViewModel() {
                     "urgent=${s.urgentMode} | headsUp=${s.forceHeadsUp}",
             )
             _state.update { it.copy(lastNotificationId = notifId, lastNotificationTimestamp = ts) }
+            _toastMessage.tryEmit("Notification sent! Check your status bar.")
         } else {
             appendLog("Suppressed: channel-disabled simulation is active", LogLevel.WARN)
+            _toastMessage.tryEmit("Suppressed — channel-disabled simulation is active")
         }
     }
 

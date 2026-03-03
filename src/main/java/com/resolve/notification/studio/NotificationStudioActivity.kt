@@ -92,6 +92,12 @@ class NotificationStudioActivity : AppCompatActivity() {
             }
         }
 
+        lifecycleScope.launch {
+            viewModel.toastMessage.collect { message ->
+                Toast.makeText(this@NotificationStudioActivity, message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!NotificationPermissionHelper.isPostNotificationsGranted(this)) {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
