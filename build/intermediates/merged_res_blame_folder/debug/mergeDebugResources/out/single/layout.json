@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.resolve.notification.studio-mergeDebugResources-34:/layout/notification_event_compact.xml",
+        "source": "com.resolve.notification.studio-main-37:/layout/notification_event_compact.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-mergeDebugResources-34:/layout/activity_notification_studio.xml",
+        "source": "com.resolve.notification.studio-main-37:/layout/activity_notification_studio.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-mergeDebugResources-34:/layout/notification_event_expanded.xml",
+        "source": "com.resolve.notification.studio-main-37:/layout/notification_event_expanded.xml"
+    }
+]

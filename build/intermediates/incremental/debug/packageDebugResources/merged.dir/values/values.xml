@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dim_white">#B3FFFFFF</color>
+    <color name="electric_blue">#00F0FF</color>
+    <color name="ic_background_color">#00F1F1E6</color>
+    <color name="ic_launcher_background">#4D3DDC</color>
+    <color name="ic_logo_color">#F1F1E6</color>
+    <color name="system_cyan">#00E5FF</color>
+    <color name="system_gold">#FFD700</color>
+    <color name="system_green">#11D918</color>
+    <color name="system_red">#FF3D00</color>
+    <color name="void_black">#000000</color>
+    <color name="void_border">#3300E5FF</color>
+    <color name="void_dark_overlay">#CC000000</color>
+    <color name="void_particle">#00B0FF</color>
+    <string name="app_name">Notification Studio</string>
+    <style name="Theme.NotificationStudio" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/void_black</item>
+        <item name="colorPrimary">@color/system_cyan</item>
+        <item name="colorPrimaryVariant">@color/electric_blue</item>
+        <item name="colorOnPrimary">@color/void_black</item>
+        <item name="colorSecondary">@color/electric_blue</item>
+        <item name="colorOnSecondary">@color/void_black</item>
+        <item name="colorSurface">@color/void_black</item>
+        <item name="colorOnSurface">@android:color/white</item>
+        <item name="android:colorBackground">@color/void_black</item>
+        <item name="colorOnBackground">@android:color/white</item>
+    </style>
+</resources>

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.resolve.notification.studio-mergeDebugResources-33:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "/Users/andrewkrenek/.gradle/caches/8.8/transforms/03873fe198db21c5fefc14c6dd761772/transformed/appcompat-1.6.1/res/values-port/values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

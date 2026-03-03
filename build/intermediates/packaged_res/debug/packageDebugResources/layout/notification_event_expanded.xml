@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    notification_event_expanded.xml
+    ───────────────────────────────────────────────────────────────────────────
+    Expanded (big content) notification view for Resolve event reminders.
+
+    Extends notification_event_compact.xml with optional fields:
+    • Location       — controlled by notification_location visibility
+    • Leave By       — controlled by notification_leave_by visibility
+    • Prep Items     — controlled by notification_prep_items visibility
+    • Divider        — controlled by notification_divider visibility
+    • Urgency Badge  — controlled by notification_urgency_badge visibility
+
+    Design rules:
+    • LinearLayout only — no RelativeLayout (RemoteViews constraint parity)
+    • No hardcoded colour backgrounds — transparent delegates to system notification shade
+    • maxLines + ellipsize on every dynamic text field
+    • Accessibility: contentDescription on all meaningful views
+    • 8 dp spacing grid throughout
+    • Render-safe in RemoteViews and in the Notification Tailoring Studio in-app preview
+
+    Shared IDs with notification_event_compact.xml allow NotificationLayoutFactory to
+    bind data to either layout using identical code paths.
+    ───────────────────────────────────────────────────────────────────────────
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notification_expanded_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="10dp">
+
+    <!-- ── Row 1 : header (icon · label · spacer · time) ── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="6dp">
+
+        <ImageView
+            android:id="@+id/notification_icon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/ic_system_down_triangle"
+            android:tint="@color/system_cyan"
+            android:importantForAccessibility="no"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/notification_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="SYSTEM"
+            android:textColor="@color/system_cyan"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:importantForAccessibility="no" />
+
+        <android.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/notification_time_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:00 AM"
+            android:textColor="@color/dim_white"
+            android:textSize="10sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:importantForAccessibility="no" />
+
+    </LinearLayout>
+
+    <!-- ── Row 2 : event title ── -->
+    <TextView
+        android:id="@+id/notification_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TEAM MEETING"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginBottom="2dp"
+        android:contentDescription="Event title" />
+
+    <!-- ── Row 3 : countdown / time body ── -->
+    <TextView
+        android:id="@+id/notification_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IN 15 MIN"
+        android:textColor="@color/system_cyan"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:contentDescription="Time until event" />
+
+    <!-- ── Urgency badge — visible only for URGENT_ALERT style ── -->
+    <TextView
+        android:id="@+id/notification_urgency_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="⚠ URGENT — ACTION REQUIRED"
+        android:textColor="@color/system_red"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.08"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:contentDescription="Urgent alert indicator" />
+
+    <!-- ── Thin divider — visible when any optional field is shown ── -->
+    <View
+        android:id="@+id/notification_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="6dp"
+        android:background="@color/void_border"
+        android:visibility="gone"
+        android:importantForAccessibility="no" />
+
+    <!-- ── Optional field: Location ── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone"
+        android:id="@+id/notification_location_row">
+
+        <TextView
+            android:id="@+id/notification_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📍 Conference Room A"
+            android:textColor="@color/dim_white"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:visibility="gone"
+            android:contentDescription="Event location" />
+
+    </LinearLayout>
+
+    <!-- ── Optional field: Leave By ── -->
+    <TextView
+        android:id="@+id/notification_leave_by"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="LEAVE BY 9:45 AM"
+        android:textColor="@color/system_red"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:contentDescription="Departure time reminder" />
+
+    <!-- ── Optional field: Prep Items ── -->
+    <TextView
+        android:id="@+id/notification_prep_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="• Laptop\n• Notebook\n• Badge"
+        android:textColor="@color/system_gold"
+        android:textSize="12sp"
+        android:lineSpacingExtra="2dp"
+        android:maxLines="4"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:contentDescription="Items to prepare" />
+
+</LinearLayout>

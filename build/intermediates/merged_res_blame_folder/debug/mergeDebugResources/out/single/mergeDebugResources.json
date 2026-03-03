@@ -1,0 +1,106 @@
+[
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_system_down_triangle.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_system_down_triangle.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_system_diamond.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_system_diamond.xml"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_system_star.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_system_star.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_system_right_triangle.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_system_right_triangle.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.resolve.notification.studio-main-37:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/layout_notification_event_expanded.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/layout/notification_event_expanded.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_splash_background.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/splash_background.xml"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_system_circle.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_system_circle.xml"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_notification.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_notification.xml"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_close.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_close.xml"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_system_square.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_system_square.xml"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.resolve.notification.studio-debug-35:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.resolve.notification.studio-main-37:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/layout_notification_event_compact.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/layout/notification_event_compact.xml"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/layout_activity_notification_studio.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/layout/activity_notification_studio.xml"
+    },
+    {
+        "merged": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-debug-35:/drawable_ic_system_hollow_diamond.xml.flat",
+        "source": "/Users/andrewkrenek/.gradle/daemon/8.8/com.resolve.notification.studio-main-37:/drawable/ic_system_hollow_diamond.xml"
+    }
+]
