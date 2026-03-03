@@ -2,24 +2,18 @@
 <!--
     activity_notification_studio.xml
     ───────────────────────────────────────────────────────────────────────────
-    ⚠️ DEBUG-ONLY layout — used exclusively by NotificationStudioActivity, which
-    is registered only in src/debug/AndroidManifest.xml and gated behind
-    BuildConfig.DEBUG at runtime.
-
-    Layout structure (LinearLayout-only as per studio constraint parity with
-    RemoteViews-compatible notification layouts):
+    Layout structure:
 
     [Toolbar]
-    [Thin divider]
+    [Divider]
     [ScrollView]
-      [Content LinearLayout]
-        [Section: Style Selector]
-        [Section: Fields]          — title, timeText, location, leaveBy, prepItems
-        [Section: Toggles]         — 7 on/off controls
-        [Section: Live Preview]    — inflated notification layout + compact/expanded toggle
-        [Section: Debug Panel]     — collapsible diagnostic information
+      [SEND section]     — hero: live preview + big SEND NOTIFICATION button
+      [CONTENT section]  — title, timeText, location (+toggle), leaveBy (+toggle), prepItems (+toggle)
+      [BEHAVIOR section] — urgentMode, forceHeadsUp, simulate5MinLeft, channelDisabled
+      [STYLE section]    — style picker + custom style config (collapsible)
+      [DEBUG section]    — collapsible diagnostic panel
     [Bottom bar]
-      [Send Test Notification] [Export Config]
+      [Export Config]
     ───────────────────────────────────────────────────────────────────────────
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -102,7 +96,545 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- ─────────────────────── SECTION: STYLE SELECTOR ─────────────── -->
+            <!-- ═══════════════════ SECTION: SEND NOTIFICATION (HERO) ══════════
+                 Primary hero card — live preview + the main send action button.
+                 This is the first thing the user sees and interacts with.
+             ═══════════════════════════════════════════════════════════════════ -->
+
+            <!-- Section header row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="LIVE PREVIEW"
+                    android:textColor="@color/system_cyan"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    android:accessibilityHeading="true" />
+
+                <TextView
+                    android:id="@+id/tv_preview_mode_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EXPANDED"
+                    android:textColor="@color/dim_white"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="8dp"
+                    android:importantForAccessibility="no" />
+
+                <Button
+                    android:id="@+id/btn_toggle_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="COMPACT"
+                    android:textSize="10sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:contentDescription="Switch between compact and expanded preview" />
+
+            </LinearLayout>
+
+            <!-- Preview card — notification layout inflated here at runtime -->
+            <FrameLayout
+                android:id="@+id/preview_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:background="@color/void_dark_overlay"
+                android:padding="4dp"
+                android:contentDescription="Live notification preview" />
+
+            <!-- Send Notification button — PRIMARY HERO ACTION -->
+            <Button
+                android:id="@+id/btn_send_notification"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="SEND NOTIFICATION"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:layout_marginBottom="4dp"
+                android:contentDescription="Send a test notification with current settings" />
+
+            <!-- Section divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/void_border"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:importantForAccessibility="no" />
+
+            <!-- ═══════════════════════ SECTION: CONTENT ═════════════════════ -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTENT"
+                android:textColor="@color/system_cyan"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="12dp"
+                android:accessibilityHeading="true" />
+
+            <!-- Field: Title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textColor="@color/dim_white"
+                    android:textSize="11sp"
+                    android:layout_marginBottom="4dp" />
+
+                <EditText
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|textCapCharacters"
+                    android:hint="e.g. TEAM MEETING"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/void_border"
+                    android:textSize="14sp"
+                    android:background="@android:color/transparent"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:contentDescription="Notification title text" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/void_border"
+                    android:layout_marginTop="4dp"
+                    android:importantForAccessibility="no" />
+
+            </LinearLayout>
+
+            <!-- Field: Time Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time Text"
+                    android:textColor="@color/dim_white"
+                    android:textSize="11sp"
+                    android:layout_marginBottom="4dp" />
+
+                <EditText
+                    android:id="@+id/et_time_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|textCapCharacters"
+                    android:hint="e.g. IN 15 MIN"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/void_border"
+                    android:textSize="14sp"
+                    android:background="@android:color/transparent"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:contentDescription="Countdown text displayed in notification" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/void_border"
+                    android:layout_marginTop="4dp"
+                    android:importantForAccessibility="no" />
+
+            </LinearLayout>
+
+            <!-- Field: Location with inline show/hide toggle -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Location"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Show"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="6dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_show_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Toggle show location" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="e.g. Conference Room A"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/void_border"
+                    android:textSize="14sp"
+                    android:background="@android:color/transparent"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:contentDescription="Event location" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/void_border"
+                    android:layout_marginTop="4dp"
+                    android:importantForAccessibility="no" />
+
+            </LinearLayout>
+
+            <!-- Field: Leave By with inline show/hide toggle -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Leave By"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Show"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="6dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_show_leave_by"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Toggle show leave-by time" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_leave_by"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="e.g. 9:45 AM"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/void_border"
+                    android:textSize="14sp"
+                    android:background="@android:color/transparent"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:contentDescription="Time to leave for event" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/void_border"
+                    android:layout_marginTop="4dp"
+                    android:importantForAccessibility="no" />
+
+            </LinearLayout>
+
+            <!-- Field: Prep Items with inline show/hide toggle -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Prep Items"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Show"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="6dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_show_prep_items"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Toggle show prep items" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_prep_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="• Laptop&#10;• Notebook"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/void_border"
+                    android:textSize="14sp"
+                    android:background="@android:color/transparent"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:maxLines="5"
+                    android:gravity="top|start"
+                    android:contentDescription="Preparation items list" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/void_border"
+                    android:layout_marginTop="4dp"
+                    android:importantForAccessibility="no" />
+
+            </LinearLayout>
+
+            <!-- Section divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/void_border"
+                android:layout_marginBottom="16dp"
+                android:importantForAccessibility="no" />
+
+            <!-- ═══════════════════════ SECTION: BEHAVIOR ════════════════════ -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BEHAVIOR"
+                android:textColor="@color/system_cyan"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="8dp"
+                android:accessibilityHeading="true" />
+
+            <!-- Urgent Mode -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Urgent Mode"
+                        android:textColor="@color/system_red"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Uses high-priority channel + full-screen intent"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_urgent_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Toggle urgent mode" />
+
+            </LinearLayout>
+
+            <!-- Force Heads-Up -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Force Heads-Up"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Requests a pop-over heads-up display"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_force_heads_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Toggle force heads-up notification" />
+
+            </LinearLayout>
+
+            <!-- Simulate 5 Min Left -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Simulate 5 Min Left"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Overrides time text to \"IN 5 MIN\""
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_simulate_5min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Toggle simulate 5 minutes remaining" />
+
+            </LinearLayout>
+
+            <!-- Simulate Channel Disabled -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Simulate Channel Disabled"
+                        android:textColor="@color/dim_white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Suppresses send — tests disabled-channel path"
+                        android:textColor="@color/dim_white"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_channel_disabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Toggle simulate channel disabled scenario" />
+
+            </LinearLayout>
+
+            <!-- Section divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/void_border"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:importantForAccessibility="no" />
+
+            <!-- ═══════════════════════ SECTION: STYLE ═══════════════════════ -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -176,10 +708,9 @@
 
             </RadioGroup>
 
-            <!-- ─────────────────────── SECTION: CUSTOM STYLE ───────────────────
+            <!-- ─────────────────────── CUSTOM STYLE SECTION ─────────────────
                  Visible only when "Custom" style is selected.
-                 All parameters apply to both live preview and sent test notifications.
-             ──────────────────────────────────────────────────────────────────── -->
+             ──────────────────────────────────────────────────────────────── -->
             <LinearLayout
                 android:id="@+id/ll_custom_section"
                 android:layout_width="match_parent"
@@ -199,7 +730,7 @@
                     android:layout_marginBottom="12dp"
                     android:accessibilityHeading="true" />
 
-                <!-- ── Header Label ── -->
+                <!-- Header Label -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -237,7 +768,7 @@
 
                 </LinearLayout>
 
-                <!-- ── Icon Shape ── -->
+                <!-- Icon Shape -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -304,7 +835,7 @@
 
                 </LinearLayout>
 
-                <!-- ── Background Color ── -->
+                <!-- Background Color -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -328,7 +859,7 @@
 
                 </HorizontalScrollView>
 
-                <!-- ── Accent Color (icon tint + header label) ── -->
+                <!-- Accent Color -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -352,7 +883,7 @@
 
                 </HorizontalScrollView>
 
-                <!-- ── Sub-header: TITLE ── -->
+                <!-- ── TITLE ── -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -488,7 +1019,7 @@
 
                 </LinearLayout>
 
-                <!-- ── Sub-header: TIME BODY ── -->
+                <!-- ── TIME BODY ── -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -600,7 +1131,7 @@
 
                 </LinearLayout>
 
-                <!-- ── Sub-header: OPTIONAL FIELDS ── -->
+                <!-- ── OPTIONAL FIELDS ── -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -732,7 +1263,7 @@
 
                 </HorizontalScrollView>
 
-                <!-- ── Sub-header: URGENCY BADGE ── -->
+                <!-- ── URGENCY BADGE ── -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -826,474 +1357,9 @@
                 android:layout_marginBottom="16dp"
                 android:importantForAccessibility="no" />
 
-            <!-- ─────────────────────── SECTION: FIELDS ─────────────────────── -->
+            <!-- ═══════════════════════ SECTION: DEBUG PANEL ═════════════════ -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FIELDS"
-                android:textColor="@color/system_cyan"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.1"
-                android:layout_marginBottom="12dp"
-                android:accessibilityHeading="true" />
-
-            <!-- Field: Title -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Title"
-                    android:textColor="@color/dim_white"
-                    android:textSize="11sp"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/et_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text|textCapCharacters"
-                    android:hint="e.g. TEAM MEETING"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/void_border"
-                    android:textSize="14sp"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:contentDescription="Notification title text" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/void_border"
-                    android:layout_marginTop="4dp"
-                    android:importantForAccessibility="no" />
-
-            </LinearLayout>
-
-            <!-- Field: Time Text -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Time Text"
-                    android:textColor="@color/dim_white"
-                    android:textSize="11sp"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/et_time_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text|textCapCharacters"
-                    android:hint="e.g. IN 15 MIN"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/void_border"
-                    android:textSize="14sp"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:contentDescription="Countdown text displayed in notification" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/void_border"
-                    android:layout_marginTop="4dp"
-                    android:importantForAccessibility="no" />
-
-            </LinearLayout>
-
-            <!-- Field: Location -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Location"
-                    android:textColor="@color/dim_white"
-                    android:textSize="11sp"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/et_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="e.g. Conference Room A"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/void_border"
-                    android:textSize="14sp"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:contentDescription="Event location" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/void_border"
-                    android:layout_marginTop="4dp"
-                    android:importantForAccessibility="no" />
-
-            </LinearLayout>
-
-            <!-- Field: Leave By -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Leave By"
-                    android:textColor="@color/dim_white"
-                    android:textSize="11sp"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/et_leave_by"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="e.g. 9:45 AM"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/void_border"
-                    android:textSize="14sp"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:contentDescription="Time to leave for event" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/void_border"
-                    android:layout_marginTop="4dp"
-                    android:importantForAccessibility="no" />
-
-            </LinearLayout>
-
-            <!-- Field: Prep Items (multiline) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Prep Items"
-                    android:textColor="@color/dim_white"
-                    android:textSize="11sp"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/et_prep_items"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:hint="• Laptop&#10;• Notebook"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/void_border"
-                    android:textSize="14sp"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:maxLines="5"
-                    android:gravity="top|start"
-                    android:contentDescription="Preparation items list" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/void_border"
-                    android:layout_marginTop="4dp"
-                    android:importantForAccessibility="no" />
-
-            </LinearLayout>
-
-            <!-- Section divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/void_border"
-                android:layout_marginBottom="16dp"
-                android:importantForAccessibility="no" />
-
-            <!-- ─────────────────────── SECTION: TOGGLES ────────────────────── -->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TOGGLES"
-                android:textColor="@color/system_cyan"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.1"
-                android:layout_marginBottom="8dp"
-                android:accessibilityHeading="true" />
-
-            <!-- Toggle: Show Location -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Show Location"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_show_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Toggle show location" />
-
-            </LinearLayout>
-
-            <!-- Toggle: Show Leave By -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Show Leave By"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_show_leave_by"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Toggle show leave-by time" />
-
-            </LinearLayout>
-
-            <!-- Toggle: Show Prep Items -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Show Prep Items"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_show_prep_items"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Toggle show prep items" />
-
-            </LinearLayout>
-
-            <!-- Toggle: Urgent Mode -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Urgent Mode"
-                    android:textColor="@color/system_red"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_urgent_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Toggle urgent mode" />
-
-            </LinearLayout>
-
-            <!-- Toggle: Force Heads-Up -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Force Heads-Up"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_force_heads_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Toggle force heads-up notification" />
-
-            </LinearLayout>
-
-            <!-- Toggle: Simulate 5 Min Left -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Simulate 5 Min Left"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_simulate_5min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Toggle simulate 5 minutes remaining" />
-
-            </LinearLayout>
-
-            <!-- Toggle: Simulate Channel Disabled -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Simulate Channel Disabled"
-                    android:textColor="@color/dim_white"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_channel_disabled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Toggle simulate channel disabled scenario" />
-
-            </LinearLayout>
-
-            <!-- Section divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/void_border"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:importantForAccessibility="no" />
-
-            <!-- ─────────────────────── SECTION: LIVE PREVIEW ───────────────── -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="LIVE PREVIEW"
-                    android:textColor="@color/system_cyan"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.1"
-                    android:accessibilityHeading="true" />
-
-                <TextView
-                    android:id="@+id/tv_preview_mode_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="EXPANDED"
-                    android:textColor="@color/dim_white"
-                    android:textSize="11sp"
-                    android:layout_marginEnd="8dp"
-                    android:importantForAccessibility="no" />
-
-                <Button
-                    android:id="@+id/btn_toggle_preview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:text="COMPACT"
-                    android:textSize="10sp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:contentDescription="Switch between compact and expanded preview" />
-
-            </LinearLayout>
-
-            <!-- Preview container — notification layout is inflated here at runtime -->
-            <FrameLayout
-                android:id="@+id/preview_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@color/void_dark_overlay"
-                android:padding="4dp"
-                android:contentDescription="Live notification preview" />
-
-            <!-- Section divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/void_border"
-                android:layout_marginBottom="16dp"
-                android:importantForAccessibility="no" />
-
-            <!-- ─────────────────────── SECTION: DEBUG PANEL ────────────────── -->
-
-            <!-- Collapsible header — tapping toggles debug_panel_content -->
+            <!-- Collapsible header -->
             <LinearLayout
                 android:id="@+id/debug_panel_header"
                 android:layout_width="match_parent"
@@ -1318,7 +1384,7 @@
 
             </LinearLayout>
 
-            <!-- Debug panel content — GONE by default, shown when expanded -->
+            <!-- Debug panel content -->
             <LinearLayout
                 android:id="@+id/debug_panel_content"
                 android:layout_width="match_parent"
@@ -1381,7 +1447,6 @@
                     android:fontFamily="monospace"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Channel info block -->
                 <TextView
                     android:id="@+id/tv_debug_channel_info"
                     android:layout_width="match_parent"
@@ -1392,7 +1457,6 @@
                     android:fontFamily="monospace"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Last notification sent -->
                 <TextView
                     android:id="@+id/tv_debug_last_notif"
                     android:layout_width="match_parent"
@@ -1403,7 +1467,6 @@
                     android:fontFamily="monospace"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Divider -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -1411,7 +1474,6 @@
                     android:layout_marginBottom="8dp"
                     android:importantForAccessibility="no" />
 
-                <!-- Log output -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -1446,7 +1508,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- ═══════════════════════════════════════ BOTTOM ACTION BAR ════════════ -->
+    <!-- ════════════════════════════════ BOTTOM ACTION BAR ════════════════════ -->
 
     <View
         android:layout_width="match_parent"
@@ -1462,21 +1524,10 @@
         android:background="@color/void_black">
 
         <Button
-            android:id="@+id/btn_send_notification"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="SEND TEST"
-            android:textSize="12sp"
-            android:contentDescription="Send a test notification with current settings" />
-
-        <Button
             android:id="@+id/btn_export_config"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="EXPORT XML"
+            android:text="EXPORT CONFIG"
             android:textSize="12sp"
             android:contentDescription="Copy current configuration to clipboard" />
 
