@@ -1,0 +1,227 @@
+WARNING: The following problems were found when resolving the SDK location:
+Where: sdk.dir property in local.properties file. Problem: Directory does not exist
+
+> Task :clean
+> Task :preBuild UP-TO-DATE
+> Task :preDebugBuild UP-TO-DATE
+> Task :mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :checkKotlinGradlePluginConfigurationErrors
+> Task :generateDebugResValues
+> Task :dataBindingMergeDependencyArtifactsDebug
+> Task :generateDebugResources
+> Task :packageDebugResources
+> Task :generateDebugBuildConfig
+> Task :checkDebugAarMetadata
+> Task :mapDebugSourceSetPaths
+> Task :createDebugCompatibleScreenManifests
+> Task :extractDeepLinksDebug
+> Task :parseDebugLocalResources
+> Task :processDebugMainManifest
+> Task :processDebugManifest
+> Task :javaPreCompileDebug
+> Task :mergeDebugShaders
+> Task :compileDebugShaders NO-SOURCE
+> Task :generateDebugAssets UP-TO-DATE
+> Task :mergeDebugAssets
+> Task :processDebugManifestForPackage
+> Task :compressDebugAssets
+> Task :mergeDebugResources
+> Task :checkDebugDuplicateClasses
+> Task :dataBindingGenBaseClassesDebug
+> Task :desugarDebugFileDependencies
+> Task :mergeDebugJniLibFolders
+> Task :mergeDebugNativeLibs NO-SOURCE
+> Task :stripDebugDebugSymbols NO-SOURCE
+> Task :mergeLibDexDebug
+> Task :validateSigningDebug
+> Task :writeDebugAppMetadata
+> Task :writeDebugSigningConfigVersions
+> Task :preReleaseBuild UP-TO-DATE
+> Task :generateReleaseResValues
+> Task :dataBindingMergeDependencyArtifactsRelease
+> Task :generateReleaseResources
+> Task :packageReleaseResources
+> Task :processDebugResources
+> Task :parseReleaseLocalResources
+> Task :generateReleaseBuildConfig
+> Task :checkReleaseAarMetadata
+> Task :mapReleaseSourceSetPaths
+> Task :createReleaseCompatibleScreenManifests
+> Task :extractDeepLinksRelease
+> Task :mergeReleaseResources
+> Task :processReleaseMainManifest
+> Task :dataBindingGenBaseClassesRelease
+> Task :processReleaseManifest
+> Task :buildKotlinToolingMetadata
+> Task :processReleaseManifestForPackage
+> Task :javaPreCompileRelease
+> Task :extractProguardFiles
+> Task :mergeReleaseJniLibFolders
+> Task :mergeReleaseNativeLibs NO-SOURCE
+> Task :stripReleaseDebugSymbols NO-SOURCE
+> Task :extractReleaseNativeSymbolTables NO-SOURCE
+> Task :mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :checkReleaseDuplicateClasses
+> Task :mergeExtDexDebug
+> Task :desugarReleaseFileDependencies
+> Task :mergeReleaseStartupProfile UP-TO-DATE
+> Task :processReleaseResources
+> Task :mergeReleaseArtProfile
+> Task :mergeReleaseShaders
+> Task :compileReleaseShaders NO-SOURCE
+> Task :generateReleaseAssets UP-TO-DATE
+> Task :mergeReleaseAssets
+> Task :mergeExtDexRelease
+> Task :compressReleaseAssets
+> Task :extractReleaseVersionControlInfo
+> Task :collectReleaseDependencies
+> Task :sdkReleaseDependencyData
+> Task :writeReleaseAppMetadata
+> Task :writeReleaseSigningConfigVersions
+> Task :preDebugAndroidTestBuild SKIPPED
+> Task :generateDebugAndroidTestResValues
+> Task :preDebugUnitTestBuild UP-TO-DATE
+> Task :javaPreCompileDebugUnitTest
+> Task :preReleaseUnitTestBuild UP-TO-DATE
+> Task :javaPreCompileReleaseUnitTest
+> Task :optimizeReleaseResources
+> Task :compileDebugKotlin
+
+> Task :compileDebugJavaWithJavac
+Java compiler version 21 has deprecated support for compiling with source/target version 8.
+Try one of the following options:
+    1. [Recommended] Use Java toolchain with a lower language version
+    2. Set a higher source/target version
+    3. Use a lower version of the JDK running the build (if you're not using Java toolchain)
+For more details on how to configure these settings, see https://developer.android.com/build/jdks.
+To suppress this warning, set android.javaCompile.suppressSourceTargetDeprecationWarning=true in gradle.properties.
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+
+> Task :processDebugJavaRes
+> Task :mergeDebugJavaResource
+> Task :compileReleaseKotlin
+> Task :dexBuilderDebug
+> Task :mergeProjectDexDebug
+
+> Task :compileReleaseJavaWithJavac
+Java compiler version 21 has deprecated support for compiling with source/target version 8.
+Try one of the following options:
+    1. [Recommended] Use Java toolchain with a lower language version
+    2. Set a higher source/target version
+    3. Use a lower version of the JDK running the build (if you're not using Java toolchain)
+For more details on how to configure these settings, see https://developer.android.com/build/jdks.
+To suppress this warning, set android.javaCompile.suppressSourceTargetDeprecationWarning=true in gradle.properties.
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+
+> Task :generateReleaseLintVitalReportModel
+> Task :dexBuilderRelease
+> Task :packageDebug
+> Task :createDebugApkListingFileRedirect
+> Task :assembleDebug
+> Task :mergeReleaseGlobalSynthetics
+> Task :processReleaseJavaRes
+> Task :bundleDebugClassesToCompileJar
+> Task :mergeReleaseJavaResource
+> Task :generateDebugAndroidTestLintModel
+> Task :generateDebugLintReportModel
+> Task :generateDebugUnitTestLintModel
+> Task :mergeDexRelease
+> Task :compileReleaseArtProfile
+> Task :lintAnalyzeDebugAndroidTest
+> Task :packageRelease
+> Task :createReleaseApkListingFileRedirect
+> Task :bundleDebugClassesToRuntimeJar
+> Task :compileDebugUnitTestKotlin NO-SOURCE
+> Task :compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :processDebugUnitTestJavaRes NO-SOURCE
+> Task :testDebugUnitTest NO-SOURCE
+> Task :bundleReleaseClassesToRuntimeJar
+> Task :bundleReleaseClassesToCompileJar
+> Task :compileReleaseUnitTestKotlin NO-SOURCE
+> Task :compileReleaseUnitTestJavaWithJavac NO-SOURCE
+> Task :processReleaseUnitTestJavaRes NO-SOURCE
+> Task :testReleaseUnitTest NO-SOURCE
+> Task :test UP-TO-DATE
+> Task :lintAnalyzeDebugUnitTest
+> Task :lintVitalAnalyzeRelease
+> Task :lintVitalReportRelease SKIPPED
+> Task :lintVitalRelease SKIPPED
+> Task :assembleRelease
+> Task :assemble
+> Task :lintAnalyzeDebug
+
+> Task :lintReportDebug
+Wrote HTML report to file:///app/build/reports/lint-results-debug.html
+
+> Task :lintDebug FAILED
+Lint found 11 errors, 214 warnings. First failure:
+
+/app/src/main/java/com/resolve/notification/studio/core/NotificationBuilderUtil.kt:64: Error: Call requires permission which may be rejected by user: code should explicitly check to see if permission is available (with checkPermission) or explicitly handle a potential SecurityException [MissingPermission]
+        NotificationManagerCompat.from(context).notify(STUDIO_NOTIFICATION_ID, builder.build())
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "MissingPermission":
+   This check scans through your code and libraries and looks at the APIs
+   being used, and checks this against the set of permissions required to
+   access those APIs. If the code using those APIs is called at runtime, then
+   the program will crash.
+
+   Furthermore, for permissions that are revocable (with targetSdkVersion 23),
+   client code must also be prepared to handle the calls throwing an exception
+   if the user rejects the request for permission at runtime.
+
+
+The full lint text report is located at:
+  /app/build/intermediates/lint_intermediate_text_report/debug/lintReportDebug/lint-results-debug.txt
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lintDebug'.
+> Lint found errors in the project; aborting build.
+
+  Fix the issues identified by lint, or create a baseline to see only new errors.
+  To create a baseline, run `gradlew updateLintBaseline` after adding the following to the module's build.gradle file:
+  ```
+  android {
+      lint {
+          baseline = file("lint-baseline.xml")
+      }
+  }
+  ```
+  For more details, see https://developer.android.com/studio/write/lint#snapshot
+
+  Lint found 11 errors, 214 warnings. First failure:
+
+  /app/src/main/java/com/resolve/notification/studio/core/NotificationBuilderUtil.kt:64: Error: Call requires permission which may be rejected by user: code should explicitly check to see if permission is available (with checkPermission) or explicitly handle a potential SecurityException [MissingPermission]
+          NotificationManagerCompat.from(context).notify(STUDIO_NOTIFICATION_ID, builder.build())
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+     Explanation for issues of type "MissingPermission":
+     This check scans through your code and libraries and looks at the APIs
+     being used, and checks this against the set of permissions required to
+     access those APIs. If the code using those APIs is called at runtime, then
+     the program will crash.
+
+     Furthermore, for permissions that are revocable (with targetSdkVersion 23),
+     client code must also be prepared to handle the calls throwing an exception
+     if the user rejects the request for permission at runtime.
+
+
+  The full lint text report is located at:
+    /app/build/intermediates/lint_intermediate_text_report/debug/lintReportDebug/lint-results-debug.txt
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 28s
+99 actionable tasks: 98 executed, 1 up-to-date
