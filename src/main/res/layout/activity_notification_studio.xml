@@ -574,7 +574,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Overrides time text to \"IN 5 MIN\""
+                        android:text="Overrides time text to &quot;IN 5 MIN&quot;"
                         android:textColor="@color/dim_white"
                         android:textSize="11sp" />
 
